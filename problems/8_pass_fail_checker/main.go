@@ -106,7 +106,7 @@ func readNumber(prompt string) int {
 
 func readMark() int {
 	for {
-		input := 30
+		input := readNumber("Please enter mark")
 		if input >= 1 && input <= 100 {
 			return input
 		}

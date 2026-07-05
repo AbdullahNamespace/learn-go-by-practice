@@ -70,14 +70,28 @@ var reader = bufio.NewReader(os.Stdin)
 //     INPUT FUNCTIONS
 // ======================
 
-func readString(prompt string) string {
+func readString(prompt string) (string, error) {
 	fmt.Print(prompt)
-	text, _ := reader.ReadString('\n')
-	return strings.TrimSpace(text)
+	text, err := reader.ReadString('\n')
+
+	if err != nil {
+		return "", err
+	}
+
+	return strings.TrimSpace(text), nil
 }
 
 func readName() string {
-	return readString("\nPlease Enter Your Name: ")
+	for {
+		input, err := readString("\nPlease Enter Your Name: ")
+
+		if err != nil {
+			fmt.Printf("\nX Error : Invalid input please enter again!")
+			continue
+		}
+
+		return input
+	}
 }
 
 // ======================

@@ -177,7 +177,7 @@ func sumEvenUsingInfiniteFor(n int) int {
 
 func printResult(n int) {
 
-	fmt.Print("\n1) Classic F1or Loop : ")
+	fmt.Print("\n1) Classic For Loop : ")
 	fmt.Printf("%d\n", sumEvenUsingClassicFor(n))
 
 	fmt.Print("2) While-Style Loop  : ")

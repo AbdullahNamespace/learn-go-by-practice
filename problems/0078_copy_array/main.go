@@ -1,75 +1,23 @@
-# 🐹 Learn Go by Practice
-
-## 📖 About | حول المشروع
-
-A collection of Go programming exercises for learning through practice. Each problem is documented with clear descriptions in both English and Arabic.
-
-مجموعة من تمارين برمجة Go للتعلم من خلال الممارسة. كل مشكلة موثقة بأوصاف واضحة بالإنجليزية والعربية.
-
----
-
-## 📂 Repository Structure | هيكل المستودع
-
-```
-learn-go-by-practice/
-├── .gitignore                 # Git ignore file | ملف تجاهل الجيت
-├── README.md                  # Project overview | نظرة عامة على المشروع
-├── template.md                # Problem template | قالب صياغة المشاكل
-└── problems/                  # All problem | جميع المشاكل
-    ├── 1_problem_name/
-    │   └── main.go
-    ├── 2_problem_name/
-    │   └── main.go
-    └── ...
-```
-
----
-
-## 🚀 Getting Started | البدء
-
-### Prerequisites | المتطلبات
-
-- Go installed ([Download](https://go.dev/dl/))
-
-```bash
-go version
-```
-
-### Running a Problem | تشغيل مشكلة
-
-```bash
-# Clone the repository | استنساخ المستودع
-git clone https://github.com/AbdullahNamespace/learn-go-by-practice.git
-cd learn-go-by-practice
-
-# Run a specific problem | تشغيل مشكلة محددة
-go run problems/1_problem_name/main.go
-```
-
----
-
-## 📝 Problem Template | قالب المشاكل
-
-All problems follow a consistent format defined in `template.md`:
-
-```go
 // ════════════════════════════════════════════════════════════════════════════
-// ## 🔷 Problem {NUMBER}: {problem_name}.go
+// ## 🔷 Problem 78: copy_array.go
 // ════════════════════════════════════════════════════════════════════════════
-// **Category:** {Category} | {التصنيف}
-// **Difficulty:** {Easy/Medium/Hard} | {سهل/متوسط/صعب}
-// **Source:** {programmingadvices.com / LeetCode / HackerRank}
+// **Category:** Arrays | المصفوفات
+// **Difficulty:** Easy | سهل
+// **Source:** programmingadvices.com
 // ════════════════════════════════════════════════════════════════════════════
 
 // ────────────────────────────────────────────────────────────────────────────
 // 📝 DESCRIPTION | الوصف
 // ────────────────────────────────────────────────────────────────────────────
 //
-// EN:
+// English:
+// Write a program that fills an array with random numbers, then copies all elements
+// from this source array into a destination array. Finally, it prints both arrays
+// to verify that the copy operation was successful.
 //
-//
-// AR:
-//
+// العربية:
+// اكتب برنامجًا يملأ مصفوفة بأرقام عشوائية، ثم ينسخ جميع العناصر من هذه المصفوفة
+// المصدرية إلى مصفوفة وجهة. أخيرًا، يطبع كلتا المصفوفتين للتحقق من نجاح عملية النسخ.
 //
 // ────────────────────────────────────────────────────────────────────────────
 
@@ -79,18 +27,12 @@ All problems follow a consistent format defined in `template.md`:
 //
 // Example 1:
 // Input:
+//   Number of elements: 4
 // Output:
-// Why:
-//
-// Example 2:
-// Input:
-// Output:
-// Why:
-//
-// Example 3 (Edge Case):
-// Input:
-// Output:
-// Why:
+//   Array 1 elements:
+//   10 20 30 40
+//   Array 2 elements after copy:
+//   10 20 30 40
 //
 // ────────────────────────────────────────────────────────────────────────────
 
@@ -98,9 +40,7 @@ All problems follow a consistent format defined in `template.md`:
 // ⚠️ CONSTRAINTS | القيود
 // ────────────────────────────────────────────────────────────────────────────
 //
-// •
-// •
-// •
+// • Both arrays must have the same capacity/length. | كلتا المصفوفتين يجب أن يكون لهما نفس السعة/الطول.
 //
 // ────────────────────────────────────────────────────────────────────────────
 
@@ -108,37 +48,111 @@ All problems follow a consistent format defined in `template.md`:
 // 🔧 FUNCTION SIGNATURES | توقيعات الدوال
 // ────────────────────────────────────────────────────────────────────────────
 //
-// func FunctionName(param Type) ReturnType
-// func helperFunction(param Type) ReturnType
+// func randomNumber(from, to int) int
+// func fillArrayWithRandomNumbers(arr []int)
+// func copyArray(arrDestination []int, arrSource []int)
+// func printArray(arr []int)
 //
 // ────────────────────────────────────────────────────────────────────────────
+package main
+
+import (
+	"fmt"
+	"math/rand/v2"
+	"strconv"
+)
 
 // ======================
 //   UTILITY
 // ======================
 
+func printError(prompt string) {
+	fmt.Printf("X Error : %s\n", prompt)
+}
+
 // ======================
 //     INPUT FUNCTIONS
 // ======================
+
+func readString(prompt string) string {
+	fmt.Printf("%s : ", prompt)
+
+	var input string
+
+	fmt.Scan(&input)
+
+	return input
+}
+
+func readNumber(prompt string) int {
+	for {
+		input := readString(prompt)
+
+		inputNumber, err := strconv.Atoi(input)
+
+		if err != nil {
+			printError("Invalid input please enter a valid number!")
+			continue
+		}
+
+		return inputNumber
+	}
+}
+
+func readPositiveNumber(prompt string) int {
+	for {
+		input := readNumber(prompt)
+
+		if input <= 0 {
+			printError("Invalid input please enter a positive number!")
+			continue
+		}
+
+		return input
+	}
+}
 
 // ======================
 //   PROCESSING FUNCTIONS
 // ======================
 
+func randomNumber(from, to int) int {
+	return rand.IntN(to-from+1) + from
+}
+
+func fillArrayWithRandomNumbers(arr []int) {
+	for key := range arr {
+		arr[key] = randomNumber(1, 100)
+	}
+}
+
+func copyArray(arrDestination []int, arrSource []int) {
+	copy(arrDestination, arrSource)
+}
+
 // ======================
 //     OUTPUT FUNCTIONS
 // ======================
+
+func printArray(arr []int) {
+	fmt.Printf("Array Elements: %v\n", arr)
+}
 
 // ======================
 //         MAIN
 // ======================
 
-func main() {}
+func main() {
+	lengthOfArray := readPositiveNumber("Please enter number of elements")
 
-```
+	arr := make([]int, lengthOfArray)
 
-<div align="center">
+	fillArrayWithRandomNumbers(arr)
+	printArray(arr)
 
-**Happy Coding! 🐹 | برمجة سعيدة!**
+	arrCopy := make([]int, lengthOfArray)
 
-</div>
+	copyArray(arrCopy, arr)
+	fmt.Println("Array 2 elements after copy")
+	printArray(arrCopy)
+}
